@@ -219,6 +219,12 @@ There is no ground-truth `normal`/`fault` label. The data is not a validated ope
 
 ## 🔌 API Reference
 
+### Live API
+
+- **Interactive Swagger docs:** [Open the deployed API documentation](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/docs)
+- **Health check:** [Check API status](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/health)
+- **Demo data summary:** [View assets and row count](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/demo)
+
 | Method | Route | Description |
 |---|---|---|
 | `GET` | `/` | Serves the browser dashboard |
@@ -369,7 +375,7 @@ The app is deployed from the GitHub repository and is publicly reachable:
 
 | Resource | URL |
 |---|---|
-| Live dashboard | [Open Renewable Asset Copilot](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app) |
+| Live dashboard | [https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app) |
 | API health | [`/api/health`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/health) |
 | Data and assets | [`/api/demo`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/demo) |
 | Interactive API docs | [`/docs`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/docs) |
