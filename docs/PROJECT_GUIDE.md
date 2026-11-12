@@ -140,7 +140,7 @@ Run:
 
 ```powershell
 python -m unittest discover -s tests -v
-python scripts/evaluate_detector.py
+python -m scripts.evaluate_detector
 ```
 
 The unit tests check several specific behaviors: a nighttime zero-power solar row is not given the daylight power-deficit reason; an artificial low-output daylight row produces evidence and recommended checks; a synthetic high-temperature/high-vibration wind row produces a high-severity alert; and missing columns fail clearly.
