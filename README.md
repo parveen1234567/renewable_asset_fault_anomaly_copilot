@@ -9,7 +9,7 @@
   <img alt="FastAPI" src="https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white">
   <img alt="scikit-learn" src="https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
   <img alt="HTML CSS JavaScript" src="https://img.shields.io/badge/UI-HTML%20%2F%20CSS%20%2F%20JavaScript-E34F26?logo=html5&logoColor=white">
-  <img alt="Railway configuration included" src="https://img.shields.io/badge/Railway-config%20included-8B5CF6?logo=railway&logoColor=white">
+  <img alt="Railway deployed but not publicly exposed" src="https://img.shields.io/badge/Railway-deployed%20%2F%20not%20public-8B5CF6?logo=railway&logoColor=white">
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
   <a href="#deploy-to-railway">Railway Deployment</a>
 </p>
 
-> **Project status:** Runnable local demo; Railway deployment configuration is included, but a public Railway deployment has not been set up. Model results are review signals—not diagnoses or maintenance instructions.
+> **Project status:** Railway reports the service online and the latest deployment successful, but the service is currently unexposed and has no public URL. Model results are review signals—not diagnoses or maintenance instructions.
 
 ---
 
@@ -378,7 +378,7 @@ To deploy:
 5. Verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs`.
 6. Add the public service URL to this README only after the deployment has been tested.
 
-**No Railway service has been deployed for this repository yet.** Deployment requires access to the owner's Railway account.
+**Railway deployment is active, but the service is not publicly exposed yet.** In the Railway service, open **Settings → Networking** and generate a public domain. Then verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs` before adding the resulting URL here. The app has no authentication and currently uses synthetic demo data; do not connect sensitive operational data.
 
 ---
 

@@ -181,9 +181,11 @@ Deployment must be performed from an account that has access to the project repo
    `uvicorn backend.app:app --host 0.0.0.0 --port $PORT`
 4. Railway supplies `PORT`; do not commit a fixed port or secrets.
 5. After deployment, open the generated public URL and verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs`.
-6. Save the deployment URL and screenshots/demo notes for submission.
+6. If the service is unexposed, use its **Settings → Networking** controls to generate a public domain. Save that URL and screenshots/demo notes for submission.
 
-If the service fails, check Railway build/deploy logs first. Confirm the requirements install successfully, the dataset and frontend files are included in the repository, and the process binds to `0.0.0.0` and the supplied `$PORT`. This repository does not contain deployment credentials and has not been deployed automatically.
+The owner's Railway dashboard currently reports the deployment successful and service online, but the service is unexposed and has no public URL yet. Verify the app endpoints after generating a domain. The app has no authentication and uses synthetic demo data; do not connect sensitive operational data.
+
+If the service fails, check Railway build/deploy logs first. Confirm the requirements install successfully, the dataset and frontend files are included in the repository, and the process binds to `0.0.0.0` and the supplied `$PORT`. Deployment settings and account credentials are managed in Railway, not stored in this repository.
 
 ## 10. A concise presentation explanation
 
