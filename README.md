@@ -19,9 +19,6 @@
   &nbsp;•&nbsp;
   <a href="./docs/PROJECT_GUIDE.md">Detailed Project Guide</a>
   &nbsp;•&nbsp;
-  <a href="#api-reference">API Reference</a>
-  &nbsp;•&nbsp;
-  <a href="#deploy-to-railway">Railway Deployment</a>
 </p>
 
 > **Project status:** The Railway app is publicly deployed and verified. Model results are review signals—not diagnoses or maintenance instructions.
