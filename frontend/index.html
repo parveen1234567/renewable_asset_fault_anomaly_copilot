@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10241e">
+  <title>Renewable Asset Copilot</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #0c1714;
+      --panel: #14231e;
+      --panel-light: #192b25;
+      --border: #2b4038;
+      --text: #edf5ef;
+      --muted: #a4b7aa;
+      --green: #8fe0a8;
+      --amber: #f3c879;
+      --red: #ff9a8b;
+      --blue: #a8c9ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at top left, #183329 0, var(--page) 48rem);
+      color: var(--text);
+      font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    main { width: min(1120px, calc(100% - 36px)); margin: 0 auto; padding: 48px 0 64px; }
+    header { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; margin-bottom: 32px; }
+    .eyebrow { color: var(--green); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 8px 0; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -.04em; }
+    h2 { margin: 0; font-size: 19px; }
+    h3 { margin: 0 0 6px; font-size: 16px; }
+    p { margin: 8px 0 0; color: var(--muted); }
+    .status { flex: 0 0 auto; border: 1px solid var(--border); border-radius: 999px; padding: 7px 12px; color: var(--green); background: #13251d; font-size: 13px; }
+    .panel, .stat, .alert { border: 1px solid var(--border); border-radius: 16px; background: rgba(20, 35, 30, .92); }
+    .controls { display: flex; align-items: end; gap: 12px; flex-wrap: wrap; padding: 20px; }
+    label { display: grid; gap: 6px; color: var(--muted); font-size: 13px; }
+    select, button { min-height: 42px; border: 1px solid var(--border); border-radius: 9px; font: inherit; }
+    select { min-width: 220px; padding: 0 12px; color: var(--text); background: var(--panel-light); }
+    button { padding: 0 18px; color: #0d1d14; background: var(--green); border-color: var(--green); cursor: pointer; font-weight: 700; }
+    button:hover { filter: brightness(1.06); }
+    button:disabled { opacity: .6; cursor: wait; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 28px; }
+    .stat { padding: 17px 19px; }
+    .stat span { display: block; color: var(--muted); font-size: 13px; }
+    .stat strong { display: block; margin-top: 5px; font-size: 27px; letter-spacing: -.03em; }
+    .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    .section-head p { margin: 0; font-size: 13px; }
+    #alerts { display: grid; gap: 12px; }
+    .alert { padding: 18px; border-left: 4px solid var(--blue); }
+    .alert.high { border-left-color: var(--red); }
+    .alert.medium { border-left-color: var(--amber); }
+    .alert.low { border-left-color: var(--blue); }
+    .alert-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .badge { padding: 3px 9px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .badge.high { color: var(--red); }
+    .badge.medium { color: var(--amber); }
+    .badge.low { color: var(--blue); }
+    .alert p { color: var(--text); }
+    .alert ul { margin: 8px 0 0; padding-left: 19px; color: var(--muted); }
+    .telemetry { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+    .chip { border: 1px solid var(--border); border-radius: 7px; padding: 3px 8px; color: var(--muted); background: #101d19; font-size: 12px; }
+    .empty, .error, .note { border-radius: 12px; padding: 15px 17px; }
+    .empty { border: 1px dashed var(--border); color: var(--muted); }
+    .error { display: none; margin-top: 12px; color: var(--red); background: #321c1b; }
+    .note { margin-top: 24px; border: 1px solid #554b34; color: #e8d6ac; background: #29251b; font-size: 13px; }
+    footer { margin-top: 24px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 640px) {
+      main { width: min(100% - 24px, 1120px); padding-top: 30px; }
+      header { display: block; }
+      .status { display: inline-block; margin-top: 12px; }
+      .stats { grid-template-columns: 1fr; gap: 9px; }
+      .stat { padding: 13px 16px; }
+      .stat strong { font-size: 23px; }
+      select { width: 100%; }
+      .controls label { flex: 1 1 100%; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="eyebrow">Operations decision support · Demo</div>
+        <h1>Renewable Asset Copilot</h1>
+        <p>Review unusual telemetry with evidence and practical next checks.</p>
+      </div>
+      <div id="status" class="status">Connecting to API…</div>
+    </header>
+
+    <section class="panel controls" aria-label="Analysis controls">
+      <label for="asset">Asset to analyze
+        <select id="asset"><option value="">All assets</option></select>
+      </label>
+      <button id="run" type="button">Analyze telemetry</button>
+    </section>
+    <div id="error" class="error" role="alert"></div>
+
+    <section class="stats" aria-label="Analysis summary">
+      <div class="stat"><span>Rows analyzed</span><strong id="rows">—</strong></div>
+      <div class="stat"><span>Assets analyzed</span><strong id="asset-count">—</strong></div>
+      <div class="stat"><span>Review alerts</span><strong id="alert-count">—</strong></div>
+    </section>
+
+    <section aria-labelledby="alerts-title">
+      <div class="section-head">
+        <h2 id="alerts-title">Alerts to review</h2>
+        <p id="method"></p>
+      </div>
+      <div id="alerts"><div class="empty">Run an analysis to see the results.</div></div>
+    </section>
+
+    <aside class="note">
+      Demo and safety note: data is synthetic and unlabelled. A flag is not a confirmed fault,
+      diagnosis, or instruction to dispatch maintenance. Check site procedures and sensor quality.
+    </aside>
+    <footer>Built with FastAPI, pandas, and scikit-learn · No external LLM or API key is required.</footer>
+  </main>
+  <script>
+    const assetSelect = document.getElementById("asset");
+    const runButton = document.getElementById("run");
+    const errorBox = document.getElementById("error");
+
+    function makeTextElement(tag, text, className) {
+      const element = document.createElement(tag);
+      element.textContent = text;
+      if (className) element.className = className;
+      return element;
+    }
+
+    function renderAlerts(alerts) {
+      const container = document.getElementById("alerts");
+      container.replaceChildren();
+      if (!alerts.length) {
+        container.append(makeTextElement("div", "No review alerts for this selection.", "empty"));
+        return;
+      }
+
+      for (const alert of alerts) {
+        const card = makeTextElement("article", "", `alert ${alert.severity}`);
+        const top = makeTextElement("div", "", "alert-top");
+        top.append(
+          makeTextElement("h3", `${alert.asset_id} · row ${alert.timestamp_id}`),
+          makeTextElement("span", alert.severity, `badge ${alert.severity}`)
+        );
+        card.append(top, makeTextElement("p", `Hour ${alert.hour} · ${alert.reasons.join(" ")}`));
+
+        const checks = document.createElement("ul");
+        for (const recommendation of alert.recommended_checks) {
+          checks.append(makeTextElement("li", recommendation));
+        }
+        card.append(checks);
+
+        const telemetry = makeTextElement("div", "", "telemetry");
+        const units = {
+          irradiance_wm2: "W/m²",
+          wind_speed_ms: "m/s",
+          temperature_c: "°C",
+          vibration_mm_s: "mm/s",
+          power_mw: "MW"
+        };
+        for (const [name, value] of Object.entries(alert.telemetry)) {
+          const label = name.replaceAll("_", " ");
+          telemetry.append(makeTextElement("span", `${label}: ${value} ${units[name] || ""}`, "chip"));
+        }
+        card.append(telemetry);
+        container.append(card);
+      }
+    }
+
+    async function runAnalysis() {
+      runButton.disabled = true;
+      runButton.textContent = "Analyzing…";
+      errorBox.style.display = "none";
+      try {
+        const response = await fetch("/api/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ asset_id: assetSelect.value || null, text: "" })
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.detail || "The analysis request failed.");
+
+        document.getElementById("rows").textContent = result.total_rows;
+        document.getElementById("asset-count").textContent = result.analyzed_assets.length;
+        document.getElementById("alert-count").textContent = result.alert_count;
+        document.getElementById("method").textContent = result.model.name;
+        renderAlerts(result.alerts);
+      } catch (error) {
+        errorBox.textContent = error.message || "Could not connect to the API.";
+        errorBox.style.display = "block";
+      } finally {
+        runButton.disabled = false;
+        runButton.textContent = "Analyze telemetry";
+      }
+    }
+
+    async function initialize() {
+      try {
+        const response = await fetch("/api/demo");
+        const demo = await response.json();
+        if (!response.ok) throw new Error(demo.detail || "API is unavailable.");
+        for (const asset of demo.assets) {
+          assetSelect.append(new Option(asset, asset));
+        }
+        document.getElementById("status").textContent = `API online · ${demo.total_rows} rows`;
+        await runAnalysis();
+      } catch (error) {
+        document.getElementById("status").textContent = "API unavailable";
+        errorBox.textContent = error.message || "Could not connect to the API.";
+        errorBox.style.display = "block";
+      }
+    }
+
+    runButton.addEventListener("click", runAnalysis);
+    assetSelect.addEventListener("change", runAnalysis);
+    initialize();
+  </script>
+</body>
+</html>
