@@ -18,7 +18,6 @@
   <a href="https://github.com/parveen1234567/renewable_asset_fault_anomaly_copilot">Source Code</a>
   &nbsp;•&nbsp;
   <a href="./docs/PROJECT_GUIDE.md">Detailed Project Guide</a>
-  &nbsp;•&nbsp;
 </p>
 
 > **Project status:** The Railway app is publicly deployed and verified. Model results are review signals—not diagnoses or maintenance instructions.
