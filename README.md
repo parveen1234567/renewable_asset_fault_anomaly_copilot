@@ -9,10 +9,12 @@
   <img alt="FastAPI" src="https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white">
   <img alt="scikit-learn" src="https://img.shields.io/badge/ML-scikit--learn-F7931E?logo=scikitlearn&logoColor=white">
   <img alt="HTML CSS JavaScript" src="https://img.shields.io/badge/UI-HTML%20%2F%20CSS%20%2F%20JavaScript-E34F26?logo=html5&logoColor=white">
-  <img alt="Railway deployed but not publicly exposed" src="https://img.shields.io/badge/Railway-deployed%20%2F%20not%20public-8B5CF6?logo=railway&logoColor=white">
+  <img alt="Railway deployment live" src="https://img.shields.io/badge/Railway-live-8B5CF6?logo=railway&logoColor=white">
 </p>
 
 <p align="center">
+  <a href="https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app">Live Application</a>
+  &nbsp;•&nbsp;
   <a href="https://github.com/parveen1234567/renewable_asset_fault_anomaly_copilot">Source Code</a>
   &nbsp;•&nbsp;
   <a href="./docs/PROJECT_GUIDE.md">Detailed Project Guide</a>
@@ -22,7 +24,7 @@
   <a href="#deploy-to-railway">Railway Deployment</a>
 </p>
 
-> **Project status:** Railway reports the service online and the latest deployment successful, but the service is currently unexposed and has no public URL. Model results are review signals—not diagnoses or maintenance instructions.
+> **Project status:** The Railway app is publicly deployed and verified. Model results are review signals—not diagnoses or maintenance instructions.
 
 ---
 
@@ -361,24 +363,20 @@ If activating the virtual environment is restricted by local PowerShell policy, 
 
 ---
 
-## ☁️ Deploy to Railway
+## ☁️ Railway Deployment
 
-The repository includes a [`Procfile`](./Procfile) and a Python version file. The web command uses Railway's provided port:
+The app is deployed from the GitHub repository and is publicly reachable:
 
-~~~text
-uvicorn backend.app:app --host 0.0.0.0 --port $PORT
-~~~
+| Resource | URL |
+|---|---|
+| Live dashboard | [Open Renewable Asset Copilot](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app) |
+| API health | [`/api/health`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/health) |
+| Data and assets | [`/api/demo`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/api/demo) |
+| Interactive API docs | [`/docs`](https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app/docs) |
 
-To deploy:
+The public dashboard, health route, data summary, and API docs have been checked. The repository includes a [`Procfile`](./Procfile) that binds the web process to Railway's provided `$PORT` and a [`.python-version`](./.python-version) for Python 3.11.
 
-1. Sign in to Railway and create a project from the GitHub repository.
-2. Use the repository root as the service root.
-3. Let Railway install dependencies from `requirements.txt` and start the process from the `Procfile`.
-4. Check deployment logs, then open the generated service URL.
-5. Verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs`.
-6. Add the public service URL to this README only after the deployment has been tested.
-
-**Railway deployment is active, but the service is not publicly exposed yet.** In the Railway service, open **Settings → Networking** and generate a public domain. Then verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs` before adding the resulting URL here. The app has no authentication and currently uses synthetic demo data; do not connect sensitive operational data.
+The API has no authentication and currently uses synthetic demo data. Do not connect sensitive operational data or treat the alerts as production maintenance decisions.
 
 ---
 

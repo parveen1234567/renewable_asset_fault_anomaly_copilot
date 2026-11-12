@@ -173,17 +173,21 @@ The project intentionally does not include RAG or an external LLM: the repositor
 
 ## 9. Railway deployment
 
-Deployment must be performed from an account that has access to the project repository:
+The app is deployed and available at:
 
-1. Push the project to a GitHub repository. Do not upload `.venv` directories.
-2. In Railway, create a new project and deploy from the GitHub repository.
-3. Use the repository root as the service root. `.python-version` selects Python 3.11. The included `Procfile` starts:
-   `uvicorn backend.app:app --host 0.0.0.0 --port $PORT`
-4. Railway supplies `PORT`; do not commit a fixed port or secrets.
-5. After deployment, open the generated public URL and verify `/`, `/api/health`, `/api/demo`, `/api/run`, and `/docs`.
-6. If the service is unexposed, use its **Settings → Networking** controls to generate a public domain. Save that URL and screenshots/demo notes for submission.
+**Live dashboard:** https://renewableassetfaultanomalycopilot-production-1681132b.up.railway.app
 
-The owner's Railway dashboard currently reports the deployment successful and service online, but the service is unexposed and has no public URL yet. Verify the app endpoints after generating a domain. The app has no authentication and uses synthetic demo data; do not connect sensitive operational data.
+The public dashboard loaded successfully. The `/api/health` endpoint returned `ok`, `/api/demo` reported 240 rows across two assets, and `/docs` returned HTTP 200. The browser dashboard also ran an analysis and displayed the returned alerts.
+
+The deployment uses the repository root, `.python-version` selects Python 3.11, and the included `Procfile` starts:
+
+```text
+uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+```
+
+For future updates, push changes to the GitHub branch connected to Railway and verify the resulting deployment from the Railway dashboard. Railway supplies `PORT`; do not commit a fixed port or secrets.
+
+The app has no authentication and currently uses synthetic demo data. Do not connect sensitive operational data or treat alerts as production maintenance decisions.
 
 If the service fails, check Railway build/deploy logs first. Confirm the requirements install successfully, the dataset and frontend files are included in the repository, and the process binds to `0.0.0.0` and the supplied `$PORT`. Deployment settings and account credentials are managed in Railway, not stored in this repository.
 
